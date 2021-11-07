@@ -1,0 +1,45 @@
+{% extends 'restaurantapp/base.html'%}
+{% block content %}
+<style>
+    .text1 {
+        width: 350px;
+    }
+    .shops{
+        width: 40%;
+        
+    }
+</style>
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong></strong> {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endfor %}
+<h1>This is Rating predictor page</h1>
+<div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="input-group text1">
+            <span class="input-group-text">Food Rating</span>
+            <input type="text" aria-label="Food Rating" name = "food" class="form-control">
+        </div>
+        <br>
+        <div class="input-group text1">
+            <span class="input-group-text">Service Rating</span>
+            <input type="text" aria-label="Service Rating" name = "service" class="form-control">
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Predict">
+    </form>
+    <br>
+    {% if result %}
+
+    <h1 class="info"><span class="badge bg-secondary">Your estimated overall rating is {{result}}</span></h1>
+    <br>
+    <h1 class="info"><span class="badge rounded-pill bg-warning text-dark">Here are some recommended restaurants according to your rating</span></h1>
+    {% for shop in shops %}
+    <a class="list-group-item list-group-item-action list-group-item-info shops">{{shop}}</a>
+    {% endfor %}
+    {%endif%}
+</div>
+{%endblock%}
